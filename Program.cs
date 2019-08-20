@@ -11,8 +11,8 @@ namespace example_tiff_to_pdf_dotnet
     {
         // Convert a multipage TIFF image to a PDF document.
         // This code uses the DynamicPDF Generator for .NET product.
-        // Import the ceTe.DynamicPDF namespace for the Document class.
-        // Import the ceTe.DynamicPDF.Imaging namespace for the TiffFile class
+        // Use the ceTe.DynamicPDF namespace for the Document class.
+        // Use the ceTe.DynamicPDF.Imaging namespace for the TiffFile class
         static void Main(string[] args)
         {
             //Create a TiffFile object using the TIFF file
