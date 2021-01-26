@@ -1,7 +1,9 @@
-﻿using ceTe.DynamicPDF;
+﻿using System;
+
+using ceTe.DynamicPDF;
 using ceTe.DynamicPDF.Imaging;
-using System;
-using System.Text.RegularExpressions;
+
+using ceTe.DynamicPDF.Conversion;
 
 namespace example_tiff_to_pdf_dotnet
 {
@@ -9,29 +11,32 @@ namespace example_tiff_to_pdf_dotnet
     // It references the ceTe.DynamicPDF.CoreSuite.NET NuGet package.
     class Program
     {
-        // Convert a multipage TIFF image to a PDF document.
-        // This code uses the DynamicPDF Generator for .NET product.
-        // Use the ceTe.DynamicPDF namespace for the Document class.
-        // Use the ceTe.DynamicPDF.Imaging namespace for the TiffFile class
         static void Main(string[] args)
         {
-            //Create a TiffFile object using the TIFF file
-            TiffFile tiffFile = new TiffFile(GetResourcePath("fw9_14.tif"));
-
-            //Get document from the TiffFile
-            Document document = tiffFile.GetDocument();
-
-            //Save document
-            document.Draw("output.pdf");
+            ConvertExampleOne();
+            ConvertExampleTwo();
         }
 
-        // This is a helper function to get the full path to a file in the Resources folder.
-        public static string GetResourcePath(string inputFileName)
+        // Convert a multipage TIFF image to a PDF document.
+        // This code uses the DynamicPDF Core Suite for .NET product.
+        // It used the following namespace from the ceTe.DynamicPDF.CoreSuite.NET NuGet package:
+        //  * ceTe.DynamicPDF namespace for the Document class
+        //  * ceTe.DynamicPDF.Imaging namespace for the TiffFile class
+        static void ConvertExampleOne()
         {
-            var exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-            Regex appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
-            var appRoot = appPathMatcher.Match(exePath).Value;
-            return System.IO.Path.Combine(appRoot, "Resources", inputFileName);
+            TiffFile tiffFile = new TiffFile("../../../Resources/fw9_18.tif");
+            Document document = tiffFile.GetDocument();
+            document.Draw("core-suite-output.pdf");
+        }
+
+        // Convert a multipage TIFF image to a PDF document.
+        // This code uses the DynamicPDF Converter for .NET product.
+        // It used the following namespace from the ceTe.DynamicPDF.Converter.NET NuGet package:
+        //  * ceTe.DynamicPDF.Conversion for the ImageConverter class
+        static void ConvertExampleTwo()
+        {
+            ImageConverter imageConverter = new ImageConverter("../../../Resources/fw9_18.tif");
+            imageConverter.Convert("converter-output.pdf");
         }
     }
 }
